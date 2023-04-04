@@ -1,4 +1,4 @@
-package ru.dungeon.aiMasters;
+package ru.dungeon.aimasters;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

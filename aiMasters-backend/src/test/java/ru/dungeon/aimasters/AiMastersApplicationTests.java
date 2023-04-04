@@ -1,4 +1,4 @@
-package ru.dungeon.aiMasters;
+package ru.dungeon.aimasters;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
