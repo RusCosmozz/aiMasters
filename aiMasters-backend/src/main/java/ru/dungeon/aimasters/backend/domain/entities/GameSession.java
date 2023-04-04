@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
+ * todo javadoc когда будет ясны модели
+ *
  * @author Ermakov KS
  * @since 04.04.2023
  */
@@ -20,9 +22,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class GameSession extends BaseUUIDEntity {
 
-  @Column(name = "name", nullable = false)
-  private String name;
-
   @OneToOne
   @JoinColumn(name = "host_id", referencedColumnName = "id")
   private User host;
@@ -31,18 +30,9 @@ public class GameSession extends BaseUUIDEntity {
   @JoinColumn(name = "world_id", referencedColumnName = "id")
   private World world;
 
-  @Column(name = "description")
-  private String description;
-
   @Column(name = "summary")
   private String summary;
 
   @Column(name = "status", nullable = false)
   private String status;
-
-  @Column(name = "start_date")
-  private LocalDateTime startDate;
-
-  @Column(name = "end_date")
-  private LocalDateTime endDate;
 }

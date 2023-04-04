@@ -1,3 +1,5 @@
+SET search_path TO aimasters;
+
 CREATE TABLE if not exists users
 (
     id       UUID                NOT NULL,
@@ -8,22 +10,22 @@ CREATE TABLE if not exists users
     PRIMARY KEY (id)
 );
 
-CREATE TABLE if not exists game_sessions
-(
-    id         UUID         NOT NULL,
-    host_id    UUID REFERENCES users (id),
-    world_id   UUID REFERENCES worlds (id),
-    summary    TEXT,
-    status     VARCHAR(255) NOT NULL,
-    start_date TIMESTAMP,
-    end_date   TIMESTAMP
-);
-
 CREATE TABLE if not exists worlds
 (
     id          UUID NOT NULL,
     world_name  VARCHAR(255),
-    description TEXT
+    description TEXT,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE if not exists game_sessions
+(
+    id       UUID         NOT NULL,
+    host_id  UUID REFERENCES users (id),
+    world_id UUID REFERENCES worlds (id),
+    summary  TEXT,
+    status   VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE if not exists player_characters
@@ -37,7 +39,8 @@ CREATE TABLE if not exists player_characters
     gender          VARCHAR(255) NOT NULL,
     level           INTEGER      NOT NULL,
     attributes      JSON         NOT NULL,
-    backstory       TEXT
+    backstory       TEXT,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE if not exists stories
@@ -47,7 +50,8 @@ CREATE TABLE if not exists stories
     world_id        UUID REFERENCES worlds (id),
     title           VARCHAR(255) NOT NULL,
     description     TEXT         NOT NULL,
-    status          VARCHAR(255) NOT NULL
+    status          VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 --todo индексы и гранты
