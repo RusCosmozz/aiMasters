@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class WorldRequestDto {
 
-  private String name;
+  private String worldName;
   //todo реализовать тип мира, например "CLASSIC" - генерация мира для классического dnd
 //  private WorldType type;
   private String description;

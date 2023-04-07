@@ -18,6 +18,9 @@ public class CharacterResponseDto {
 
   private UUID id;
   private UUID userId;
+  /**
+   * идентификатор мира, в котором создан персонаж
+   */
   private UUID worldId;
   private String name;
   private String race;

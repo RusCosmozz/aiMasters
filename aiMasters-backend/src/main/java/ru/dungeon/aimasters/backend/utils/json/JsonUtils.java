@@ -1,4 +1,4 @@
-package ru.dungeon.aimasters.backend.utils;
+package ru.dungeon.aimasters.backend.utils.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

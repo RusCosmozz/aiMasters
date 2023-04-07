@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import ru.dungeon.aimasters.backend.exceptions.exceptions.EnumNotFoundException;
 
 /**
+ * Енам для описания действий, совершаемых в запросе/ответе
+ *
  * @author Ermakov KS
  * @since 05.04.2023
  */

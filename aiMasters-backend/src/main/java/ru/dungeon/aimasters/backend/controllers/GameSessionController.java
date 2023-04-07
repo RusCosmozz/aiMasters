@@ -1,6 +1,6 @@
 package ru.dungeon.aimasters.backend.controllers;
 
-import static ru.dungeon.aimasters.backend.utils.JsonUtils.toJson;
+import static ru.dungeon.aimasters.backend.utils.json.JsonUtils.toJson;
 
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dungeon.aimasters.backend.dtos.ai.AiResponseDto;
-import ru.dungeon.aimasters.backend.dtos.chat.ChatMessageDto;
 import ru.dungeon.aimasters.backend.dtos.chat.MessageContent;
 import ru.dungeon.aimasters.backend.dtos.session.GameSessionRequestDto;
 import ru.dungeon.aimasters.backend.dtos.session.GameSessionResponseDto;
@@ -51,7 +50,6 @@ public class GameSessionController {
 
   @GetMapping("/{gameSessionId}")
   public GameSessionResponseDto getGameSessionById(@PathVariable UUID userId, @PathVariable UUID gameSessionId) {
-    // You may use the userId variable here if you want to enforce that the user can only see their own game sessions.
     return gameSessionService.findGameSessionById(gameSessionId, userId);
   }
 }

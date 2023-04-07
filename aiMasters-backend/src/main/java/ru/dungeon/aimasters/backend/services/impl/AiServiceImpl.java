@@ -18,6 +18,8 @@ import ru.dungeon.aimasters.backend.services.AiService;
 import ru.dungeon.aimasters.backend.utils.ChatMessageBuilder;
 
 /**
+ * Сервис для работы с нейросетью
+ *
  * @author Ermakov KS
  * @since 05.04.2023
  */
@@ -33,17 +35,21 @@ public class AiServiceImpl implements AiService {
   private static final String CONVERSATION_SESSION_KEY = "conversation";
 
   @Override
+  public AiResponseDto startGameSession(HttpSession httpSession) {
+    Conversation conversation = getConversation(httpSession);
+    AiRequestDto gameSessionRequest = aiRequestsProvider.createGameSessionRequest();
+    conversation.addMessage(gameSessionRequest.getMessages().get(0));
+    AiResponseDto aiResponseDto = sendAiRequest(gameSessionRequest);
+    conversation.getMessages().add(aiResponseDto.getChoices().get(0).getMessage());
+    return aiResponseDto;
+  }
+
+  @Override
   public AiResponseDto generateWorld(HttpSession httpSession) {
     Conversation conversation = getConversation(httpSession);
-    ChatMessageDto worldCreationMessage = ChatMessageBuilder.buildWorldCreationMessage();
-    conversation.addMessage(worldCreationMessage);
+    conversation.addMessage(ChatMessageBuilder.buildWorldCreationMessage());
     AiRequestDto worldRequest = aiRequestsProvider.createWorldRequest(conversation.getMessages());
-    AiResponseDto aiResponseDto = webClient.post()
-                                           .uri(AI_CHAT_COMPLETIONS_URI)
-                                           .body(BodyInserters.fromValue(worldRequest))
-                                           .retrieve()
-                                           .bodyToMono(AiResponseDto.class)
-                                           .block();
+    AiResponseDto aiResponseDto = sendAiRequest(worldRequest);
     conversation.getMessages().add(aiResponseDto.getChoices().get(0).getMessage());
     return aiResponseDto;
   }
@@ -51,32 +57,21 @@ public class AiServiceImpl implements AiService {
   @Override
   public AiResponseDto createCharacter(HttpSession httpSession) {
     Conversation conversation = getConversation(httpSession);
-    ChatMessageDto worldCreationMessage = ChatMessageBuilder.buildCharacterCreationMessage();
-    conversation.addMessage(worldCreationMessage);
-    AiRequestDto worldRequest = aiRequestsProvider.createNewCharacterRequest(conversation.getMessages());
-    AiResponseDto aiResponseDto = webClient.post()
-                                           .uri(AI_CHAT_COMPLETIONS_URI)
-                                           .body(BodyInserters.fromValue(worldRequest))
-                                           .retrieve()
-                                           .bodyToMono(AiResponseDto.class)
-                                           .block();
+    conversation.addMessage(ChatMessageBuilder.buildCharacterCreationMessage());
+    AiRequestDto characterRequest = aiRequestsProvider.createNewCharacterRequest(conversation.getMessages());
+    AiResponseDto aiResponseDto = sendAiRequest(characterRequest);
     conversation.getMessages().add(aiResponseDto.getChoices().get(0).getMessage());
     return aiResponseDto;
   }
 
-  @Override
-  public AiResponseDto startGameSession(HttpSession httpSession) {
-    Conversation conversation = getConversation(httpSession);
-    AiRequestDto gameSessionRequest = aiRequestsProvider.createGameSessionRequest();
-    conversation.addMessage(gameSessionRequest.getMessages().get(0));
-    AiResponseDto aiResponseDto = webClient.post()
-                                           .uri(AI_CHAT_COMPLETIONS_URI)
-                                           .body(BodyInserters.fromValue(gameSessionRequest))
-                                           .retrieve()
-                                           .bodyToMono(AiResponseDto.class)
-                                           .block();
-    conversation.getMessages().add(aiResponseDto.getChoices().get(0).getMessage());
-    return aiResponseDto;
+
+  private AiResponseDto sendAiRequest(AiRequestDto worldRequest) {
+    return webClient.post()
+                    .uri(AI_CHAT_COMPLETIONS_URI)
+                    .body(BodyInserters.fromValue(worldRequest))
+                    .retrieve()
+                    .bodyToMono(AiResponseDto.class)
+                    .block();
   }
 
   private Conversation getConversation(HttpSession session) {

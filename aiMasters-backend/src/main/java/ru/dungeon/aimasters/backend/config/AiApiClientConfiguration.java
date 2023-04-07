@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
+ * Настройка подключения к нейросети
+ *
  * @author Ermakov KS
  * @since 05.04.2023
  */

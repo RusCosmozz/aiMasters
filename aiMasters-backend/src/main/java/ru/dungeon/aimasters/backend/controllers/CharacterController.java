@@ -1,7 +1,7 @@
 package ru.dungeon.aimasters.backend.controllers;
 
-import static ru.dungeon.aimasters.backend.utils.JsonUtils.fromJson;
-import static ru.dungeon.aimasters.backend.utils.JsonUtils.toJson;
+import static ru.dungeon.aimasters.backend.utils.json.JsonUtils.fromJson;
+import static ru.dungeon.aimasters.backend.utils.json.JsonUtils.toJson;
 
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
@@ -26,7 +26,7 @@ import ru.dungeon.aimasters.backend.services.CharacterService;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/users/{userId}/world/{worldId}/characters")
+@RequestMapping("/api/users/{userId}/worlds/{worldId}/characters")
 @AllArgsConstructor
 public class CharacterController {
 

@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
@@ -23,6 +24,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.dungeon.aimasters.backend.chat.Conversation;
+import ru.dungeon.aimasters.backend.dtos.chat.ChatMessageDto;
+import ru.dungeon.aimasters.backend.dtos.chat.ChatRole;
 import ru.dungeon.aimasters.backend.exceptions.dtos.ErrorResponse;
 import ru.dungeon.aimasters.backend.exceptions.dtos.ExceptionResponseDto;
 import ru.dungeon.aimasters.backend.exceptions.exceptions.EntityAlreadyExistsException;
@@ -75,12 +78,24 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
       WebClientResponseException ex,
       @SessionAttribute("conversation") Conversation conversation) {
 
-    if (!conversation.getMessages().isEmpty()) {
-      conversation.getMessages().remove(conversation.getMessages().size() - 1);
-      conversation.getMessages().remove(conversation.getMessages().size() - 2);
-    }
+    // удалим ошибочные запросы к нейросети из разговора
+    deleteIncorrectMessagesFromConversation(conversation);
     log.error(ex.getMessage());
     return new ExceptionResponseDto(ex.getResponseBodyAsString(), INTERNAL_SERVER_ERROR);
+  }
+
+  private void deleteIncorrectMessagesFromConversation(Conversation conversation) {
+    if (!conversation.getMessages().isEmpty()) {
+      List<ChatMessageDto> messages = conversation.getMessages();
+      // если исключение произошло после ответа нейросети, то удалим и запрос и ответ
+      // если нет, то удалим только запрос
+      if (messages.get(messages.size() - 1).getRole().equals(ChatRole.ASSISTANT)) {
+        messages.remove(messages.size() - 1);
+        messages.remove(messages.size() - 2);
+      } else {
+        messages.remove(messages.size() - 1);
+      }
+    }
   }
 
   @ExceptionHandler(JsonParsingException.class)
@@ -89,10 +104,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
       JsonParsingException ex,
       @SessionAttribute("conversation") Conversation conversation) {
 
-    if (!conversation.getMessages().isEmpty()) {
-      conversation.getMessages().remove(conversation.getMessages().size() - 1);
-      conversation.getMessages().remove(conversation.getMessages().size() - 2);
-    }
+    // удалим ошибочные запросы к нейросети из разговора
+    deleteIncorrectMessagesFromConversation(conversation);
     log.error(ex.getMessage());
     return new ExceptionResponseDto(ex.getMessage(), INTERNAL_SERVER_ERROR);
   }

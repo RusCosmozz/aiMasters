@@ -19,6 +19,5 @@ public class GameSessionResponseDto {
 
   private UUID id;
   private UUID hostId;
-  private UUID worldId;
   private String status;
 }

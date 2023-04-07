@@ -1,7 +1,5 @@
 package ru.dungeon.aimasters.backend.utils;
 
-import static ru.dungeon.aimasters.backend.utils.JsonUtils.toJson;
-
 import ru.dungeon.aimasters.backend.dtos.chat.ChatAction;
 import ru.dungeon.aimasters.backend.dtos.chat.ChatMessageDto;
 import ru.dungeon.aimasters.backend.dtos.chat.ChatRole;
@@ -31,12 +29,11 @@ public class ChatMessageBuilder {
   private static ChatMessageDto buildMessage(ChatAction action, ChatRole role, String messageText) {
     MessageContent content = MessageContent.builder()
                                            .action(action)
-                                           .role(role)
                                            .message(messageText)
                                            .build();
     return ChatMessageDto.builder()
                          .role(role)
-                         .content(toJson(content))
+                         .content(content)
                          .build();
   }
 }

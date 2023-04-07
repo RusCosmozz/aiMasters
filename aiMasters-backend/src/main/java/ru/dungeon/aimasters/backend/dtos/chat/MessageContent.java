@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * Формат ответов от нейросети
+ *
  * @author Ermakov KS
  * @since 06.04.2023
  */
@@ -15,7 +17,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MessageContent {
 
-  private ChatRole role;
+  /**
+   * действие, совершаемое в запросе/ответе
+   */
   private ChatAction action;
+  /**
+   * сгенерированный текст, может быть в разном формате в зависимости от запроса
+   */
   private String message;
 }

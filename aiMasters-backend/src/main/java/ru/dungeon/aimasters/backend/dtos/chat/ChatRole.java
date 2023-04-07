@@ -6,13 +6,19 @@ import java.util.Locale;
 import ru.dungeon.aimasters.backend.exceptions.exceptions.EnumNotFoundException;
 
 /**
+ * Енам для описания отправителя сообщения
+ *
  * @author Ermakov KS
  * @since 05.04.2023
  */
 public enum ChatRole {
+  // сообщение от пользователя
   USER("user"),
+  //todo изначально планировалось что нейросеть будет отвечать с ролью Dungeon Master, но пока это не пригодилось
   DM("DM"),
+  // сообщение от нейросети
   ASSISTANT("assistant"),
+  //системное сообщение настраивает нейросеть и вводит ее в контекст (обычно это первое сообщение)
   SYSTEM("system");
 
   private final String text;
