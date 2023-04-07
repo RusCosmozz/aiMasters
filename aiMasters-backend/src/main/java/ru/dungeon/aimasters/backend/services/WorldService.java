@@ -10,7 +10,7 @@ import ru.dungeon.aimasters.backend.dtos.world.WorldResponseDto;
  */
 public interface WorldService {
 
-  WorldResponseDto createWorld(WorldRequestDto worldRequestDto);
+  WorldResponseDto createWorld(WorldRequestDto worldRequestDto, UUID gameId);
 
   WorldResponseDto findWorldById(UUID id);
 }

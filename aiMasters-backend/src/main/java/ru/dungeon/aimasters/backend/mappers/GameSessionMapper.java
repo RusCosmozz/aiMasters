@@ -17,11 +17,9 @@ import ru.dungeon.aimasters.backend.dtos.user.UserResponseDto;
 public interface GameSessionMapper {
 
   @Mapping(target = "host", ignore = true)
-  @Mapping(target = "world", ignore = true)
   @Mapping(target = "status", constant = "CREATED")
   GameSession toGameSessionEntity(GameSessionRequestDto gameSessionRequestDto);
 
   @Mapping(target = "hostId", source = "host.id")
-  @Mapping(target = "worldId", source = "world.id")
   GameSessionResponseDto toGameSessionResponseDto(GameSession gameSession);
 }

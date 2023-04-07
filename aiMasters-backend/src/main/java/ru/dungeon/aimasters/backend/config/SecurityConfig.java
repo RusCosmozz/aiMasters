@@ -1,4 +1,4 @@
-package ru.dungeon.aimasters.backend.config.security;
+package ru.dungeon.aimasters.backend.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

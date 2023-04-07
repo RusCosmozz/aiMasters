@@ -18,5 +18,4 @@ import lombok.NoArgsConstructor;
 public class GameSessionRequestDto {
 
   private String name;
-  private UUID worldId;
 }

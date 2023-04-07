@@ -10,36 +10,39 @@ CREATE TABLE if not exists users
     PRIMARY KEY (id)
 );
 
-CREATE TABLE if not exists worlds
-(
-    id          UUID NOT NULL,
-    world_name  VARCHAR(255),
-    description TEXT,
-    PRIMARY KEY (id)
-);
 
 CREATE TABLE if not exists game_sessions
 (
-    id       UUID         NOT NULL,
-    host_id  UUID REFERENCES users (id),
-    world_id UUID REFERENCES worlds (id),
-    summary  TEXT,
-    status   VARCHAR(255) NOT NULL,
+    id      UUID         NOT NULL,
+    host_id UUID REFERENCES users (id),
+    summary TEXT,
+    status  VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE if not exists player_characters
+CREATE TABLE if not exists worlds
 (
-    id              UUID         NOT NULL,
-    user_id         UUID REFERENCES users (id),
-    game_session_id UUID REFERENCES game_sessions (id),
-    name            VARCHAR(255) NOT NULL,
-    race            VARCHAR(255) NOT NULL,
-    class           VARCHAR(255) NOT NULL,
-    gender          VARCHAR(255) NOT NULL,
-    level           INTEGER      NOT NULL,
-    attributes      JSON         NOT NULL,
-    backstory       TEXT,
+    id              UUID NOT NULL,
+    world_name      VARCHAR(255),
+    description     TEXT,
+    game_session_id uuid REFERENCES game_sessions (id),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE if not exists characters
+(
+    id             UUID         NOT NULL,
+    user_id        UUID REFERENCES users (id),
+    world_id       UUID REFERENCES worlds (id),
+    name           VARCHAR(255) NOT NULL,
+    race           VARCHAR(255) NOT NULL,
+    race_overview  TEXT         NOT NULL,
+    class          VARCHAR(255) NOT NULL,
+    class_overview TEXT         NOT NULL,
+    gender         VARCHAR(255) NOT NULL,
+    level          INTEGER      NOT NULL,
+--     attributes     JSON         NOT NULL,
+    backstory      TEXT,
     PRIMARY KEY (id)
 );
 

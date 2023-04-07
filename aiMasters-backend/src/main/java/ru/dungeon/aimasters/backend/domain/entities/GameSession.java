@@ -26,10 +26,6 @@ public class GameSession extends BaseUUIDEntity {
   @JoinColumn(name = "host_id", referencedColumnName = "id")
   private User host;
 
-  @OneToOne
-  @JoinColumn(name = "world_id", referencedColumnName = "id")
-  private World world;
-
   @Column(name = "summary")
   private String summary;
 

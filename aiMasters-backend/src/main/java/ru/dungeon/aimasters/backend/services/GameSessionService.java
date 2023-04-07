@@ -1,6 +1,7 @@
 package ru.dungeon.aimasters.backend.services;
 
 import java.util.UUID;
+import javax.servlet.http.HttpSession;
 import ru.dungeon.aimasters.backend.dtos.session.GameSessionRequestDto;
 import ru.dungeon.aimasters.backend.dtos.session.GameSessionResponseDto;
 
@@ -10,7 +11,10 @@ import ru.dungeon.aimasters.backend.dtos.session.GameSessionResponseDto;
  */
 public interface GameSessionService {
 
-  GameSessionResponseDto createGameSession(GameSessionRequestDto gameSessionRequestDto, UUID hostId);
+  GameSessionResponseDto createGameSession(
+      GameSessionRequestDto gameSessionRequestDto,
+      UUID hostId,
+      HttpSession session);
 
   GameSessionResponseDto findGameSessionById(UUID id, UUID hostId);
 }

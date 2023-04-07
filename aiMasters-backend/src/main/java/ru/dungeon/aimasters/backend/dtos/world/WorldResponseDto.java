@@ -19,4 +19,5 @@ public class WorldResponseDto {
   private UUID id;
   private String worldName;
   private String description;
+  private String gameSessionId;
 }

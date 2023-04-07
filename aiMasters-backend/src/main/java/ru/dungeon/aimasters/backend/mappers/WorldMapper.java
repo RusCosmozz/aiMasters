@@ -15,8 +15,10 @@ import ru.dungeon.aimasters.backend.dtos.world.WorldResponseDto;
 @Mapper(componentModel = "spring")
 public interface WorldMapper {
 
+  @Mapping(target = "gameSession", ignore = true)
   World toWorldEntity(WorldRequestDto worldRequestDto);
 
+  @Mapping(target = "gameSessionId", source = "gameSession.id")
   WorldResponseDto toWorldDto(World world);
 
 }
