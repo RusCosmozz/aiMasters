@@ -11,9 +11,10 @@ services:
       POSTGRES_DB: aimasters_db
     restart: always
     volumes:
-      - ./aimasters-backend/src/main/resources/db/changelog/init/01_create_user.sql:/docker-entrypoint-initdb.d/01.sql:ro
-      - ./aimasters-backend/src/main/resources/db/changelog/init/03_create_schema.sql:/docker-entrypoint-initdb.d/03.sql:ro
-      - ./aimasters-backend/src/main/resources/db/changelog/init/04_create_ext_schema.sql:/docker-entrypoint-initdb.d/04.sql:ro
+      - ./backend/src/main/resources/db/changelog/init/01_create_user.sql:/docker-entrypoint-initdb.d/01.sql:ro
+#      - ./backend/src/main/resources/db/changelog/init/02_create_db.sql:/docker-entrypoint-initdb.d/02.sql:ro
+      - ./backend/src/main/resources/db/changelog/init/03_create_schema.sql:/docker-entrypoint-initdb.d/03.sql:ro
+      - ./backend/src/main/resources/db/changelog/init/04_create_ext_schema.sql:/docker-entrypoint-initdb.d/04.sql:ro
 
   aimasters.backend:
     image: aimasters.backend
@@ -29,7 +30,7 @@ services:
       aimasters_DB_USER: master
       aimasters_DB_PASSWORD: bombaster
     build:
-      context: ./aimasters-backend
+      context: ./backend
       dockerfile: Dockerfile
     links:
       - aimasters.db
