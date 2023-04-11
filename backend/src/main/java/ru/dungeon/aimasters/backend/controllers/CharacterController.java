@@ -3,16 +3,13 @@ package ru.dungeon.aimasters.backend.controllers;
 import static ru.dungeon.aimasters.backend.utils.json.JsonUtils.fromJson;
 import static ru.dungeon.aimasters.backend.utils.json.JsonUtils.toJson;
 
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.dungeon.aimasters.backend.dtos.ai.AiResponseDto;
 import ru.dungeon.aimasters.backend.dtos.character.CharacterRequestDto;
 import ru.dungeon.aimasters.backend.dtos.character.CharacterResponseDto;
@@ -26,27 +23,33 @@ import ru.dungeon.aimasters.backend.services.CharacterService;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/users/{userId}/worlds/{worldId}/characters")
+//todo /users/{userId}
+@RequestMapping("/api/worlds/{worldId}/characters")
 @AllArgsConstructor
 public class CharacterController {
 
   private final CharacterService characterService;
-  private final AiService aiService;
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public CharacterResponseDto createPlayerCharacter(
-      @PathVariable UUID userId,
       @PathVariable UUID worldId,
-      HttpSession httpSession) {
+      @RequestBody CharacterRequestDto characterRequestDto) {
 
-    log.info("Запрос на генерацию нового персонажа");
+    log.info("{}",characterRequestDto);
+/*    log.info("Запрос на генерацию нового персонажа");
     AiResponseDto aiResponseDto = aiService.createCharacter(httpSession);
     MessageContent messageContent = aiResponseDto.getChoices().get(0).getMessageContent();
     log.info("{}", toJson(messageContent));
 
-    String characterJson = messageContent.getMessage();
-    CharacterRequestDto characterRequestDto = fromJson(characterJson, CharacterRequestDto.class);
-    return characterService.savePlayerCharacter(characterRequestDto, userId, worldId);
+    String characterJson = messageContent.getMessage();*/
+    return characterService.savePlayerCharacter(characterRequestDto, UUID.randomUUID(), worldId);
+  }
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public List<CharacterResponseDto> createPlayerCharacter(
+      @PathVariable UUID worldId) {
+
+    return characterService.getPlayerCharByWorldId(worldId);
   }
 }

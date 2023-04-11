@@ -1,7 +1,7 @@
 // openaiClient.ts
 import { Configuration, OpenAIApi } from "openai";
 
-const apiKey = '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';
+const apiKey = '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';
 const configuration = new Configuration({
     apiKey: apiKey,
 });

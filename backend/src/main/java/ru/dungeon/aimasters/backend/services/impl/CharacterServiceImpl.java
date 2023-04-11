@@ -1,6 +1,9 @@
 package ru.dungeon.aimasters.backend.services.impl;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dungeon.aimasters.backend.domain.entities.PlayableCharacter;
@@ -30,15 +33,20 @@ public class CharacterServiceImpl implements CharacterService {
 
   @Override
   public CharacterResponseDto savePlayerCharacter(CharacterRequestDto characterRequestDto, UUID userId, UUID worldId) {
-    User user = getUserIfExists(userId);
+//    User user = getUserIfExists(userId);
     World world = getWorldIfExists(worldId);
     PlayableCharacter character = characterMapper.toCharacterEntity(characterRequestDto);
-    character.setUser(user);
+//    character.setUser(user);
     character.setWorld(world);
     PlayableCharacter savedCharacter = characterRepository.save(character);
     return characterMapper.toCharacterDto(savedCharacter);
   }
 
+  @Override
+  public List<CharacterResponseDto> getPlayerCharByWorldId(UUID worldId) {
+    getWorldIfExists(worldId);
+    return characterRepository.findAllByWorldId(worldId).stream().map(characterMapper::toCharacterDto).collect(Collectors.toList());
+  }
 
   private User getUserIfExists(UUID userId) {
     return userRepository.findById(userId)

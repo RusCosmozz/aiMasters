@@ -1,5 +1,6 @@
 package ru.dungeon.aimasters.backend.services;
 
+import java.util.List;
 import java.util.UUID;
 import ru.dungeon.aimasters.backend.dtos.character.CharacterRequestDto;
 import ru.dungeon.aimasters.backend.dtos.character.CharacterResponseDto;
@@ -11,4 +12,5 @@ import ru.dungeon.aimasters.backend.dtos.character.CharacterResponseDto;
 public interface CharacterService {
 
   CharacterResponseDto savePlayerCharacter(CharacterRequestDto character, UUID userId, UUID worldId);
+  List<CharacterResponseDto> getPlayerCharByWorldId(UUID worldId);
 }

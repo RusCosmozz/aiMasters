@@ -66,7 +66,6 @@ const Login = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            // Replace the URL with your backend API endpoint
             const response = await fetch('http://localhost:8086/api/users/login', {
                 method: 'POST',
                 headers: {

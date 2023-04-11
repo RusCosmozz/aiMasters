@@ -9,15 +9,21 @@ interface WorldProps {
     worldName: string | null;
     worldDescription: string | null;
     worldGenerated: boolean;
+    onWorldCreated:(worldId: string)=> void;
 }
-
+interface WorldDto{
+    id: string,
+    worldName: string,
+    description: string
+}
 const World: React.FC<WorldProps> = ({
                                          lobbyId,
                                          onGenerateWorldClick,
                                          onReadyToGenerateWorld,
                                          worldName,
                                          worldDescription,
-                                         worldGenerated
+                                         worldGenerated,
+                                         onWorldCreated
                                      }) => {
 
 
@@ -45,6 +51,8 @@ const World: React.FC<WorldProps> = ({
             if (!response.ok) {
                 throw new Error('Failed to save world to database');
             }
+            const world = await response.json() as WorldDto;
+            onWorldCreated(world.id)
         } catch (error) {
             console.error('Error saving world to database:', error);
         }
