@@ -1,3 +1,6 @@
 [submodule "aimasters-backend"]
 	path = aimasters-backend
 	url = https://github.com/RusCosmozz/aimasters-backend
+[submodule "aimasters-frontend"]
+	path = aimasters-frontend
+	url = https://github.com/RusCosmozz/aimasters-frontend
