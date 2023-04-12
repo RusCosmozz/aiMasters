@@ -1,0 +1,3 @@
+[submodule "aimasters-backend"]
+	path = aimasters-backend
+	url = https://github.com/RusCosmozz/aimasters-backend
