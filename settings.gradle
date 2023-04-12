@@ -7,6 +7,6 @@ pluginManagement {
 
 
 rootProject.name = 'aiMasters'
-include 'backend'
-include 'frontend'
+include 'aimasters-backend'
+include 'aimasters-frontend'
 
